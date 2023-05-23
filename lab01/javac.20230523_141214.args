@@ -1,0 +1,10 @@
+-d
+out
+--module-source-path
+src/
+src/cli/module-info.java
+src/cli/mypackage/cli/Main.java
+src/utilities/module-info.java
+src/utilities/random/MyRandom.java
+src/gui/module-info.java
+src/gui/mypackage/gui/Main.java
