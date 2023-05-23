@@ -1,2 +1,3 @@
 # thl-exercises
-Some exercise solutions for thl
+
+Here are some exercise solutions and examples about Java 9 - 17.
