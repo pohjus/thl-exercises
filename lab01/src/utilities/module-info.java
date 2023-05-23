@@ -1,0 +1,3 @@
+module utilities {
+    exports random;
+}
