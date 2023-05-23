@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+customjre
+
+out
+
 # Log file
 *.log
 
