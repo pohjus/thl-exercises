@@ -5,6 +5,8 @@ customjre
 
 out
 
+lib
+
 # Log file
 *.log
 
