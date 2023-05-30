@@ -1,1 +1,1 @@
-java --module-path out/ --module mymodule/mypackage.Main
+java --module-path out:lib --module cli/mypackage.cli.Main
