@@ -30,17 +30,9 @@ public class Main extends Application {
         final StackPane layout = new StackPane(button);
         
         button.setText("Click Me!");
-        button.setOnAction((e) -> layout.setStyle("-fx-background-color: " + getRandom().getRandomWord(colors)));
+        button.setOnAction((e) -> layout.setStyle("-fx-background-color: " + MyRandom.getInstance().getRandomWord(colors)));
         
         primaryStage.setScene(new Scene(layout, 300, 250));
         primaryStage.show();
-    }
-
-    public static MyRandom getRandom() {
-
-        logger.log(Level.INFO, "MyRandomImpl2 called, using Math.random()"); 
-
-        ServiceLoader<MyRandom> services = ServiceLoader.load(MyRandom.class);
-        return services.findFirst().get();
     }
 }
