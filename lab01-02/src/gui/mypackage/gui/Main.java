@@ -16,6 +16,10 @@ import java.util.logging.*;
 import java.net.http.*;
 import java.io.*;
 import java.net.*;
+import com.fasterxml.jackson.databind.*;
+import datapackage.*;
+import com.fasterxml.jackson.core.*;
+
 
 public class Main extends Application {
 
@@ -57,8 +61,15 @@ public class Main extends Application {
 
             logger.log(Level.INFO, "Async test: Start"); 
             promise.thenAccept(response -> {
-                System.out.println(response.statusCode());        
-                System.out.println(response.body());
+
+                try {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    People p = objectMapper.readValue(response.body(), People.class);
+                    System.out.println(p.results);
+                } catch(JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+
             });
             logger.log(Level.INFO, "Async test: End"); 
         } catch (URISyntaxException e) {
