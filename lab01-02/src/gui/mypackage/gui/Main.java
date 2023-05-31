@@ -20,34 +20,55 @@ import com.fasterxml.jackson.databind.*;
 import datapackage.*;
 import com.fasterxml.jackson.core.*;
 
+import javafx.collections.*;
+
 
 public class Main extends Application {
 
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
+    // public static void main(String[] args) {
+    //     launch(args);
+    // }
+ 
+    // @Override
+    // public void start(Stage primaryStage) {
+    //     primaryStage.setTitle("GUI App");
+    //     String[] colors = {"Red", "Green", "Blue", "Yellow", "Pink"};
+        
+    //     Button button = new Button();
+    //     final StackPane layout = new StackPane(button);
+        
+    //     button.setText("Click Me!");
+    //     //button.setOnAction((e) -> layout.setStyle("-fx-background-color: " + MyRandom.getInstance().getRandomWord(colors)));
+
+    //     button.setOnAction(this::fetchAsync);    
+
+    //     primaryStage.setScene(new Scene(layout, 300, 250));
+    //     primaryStage.show();
+    // }
+
+
+    private ObservableList<String> names;
+    private ListView<String> listView;
+
     public static void main(String[] args) {
         launch(args);
     }
- 
+
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("GUI App");
-        String[] colors = {"Red", "Green", "Blue", "Yellow", "Pink"};
-        
-        Button button = new Button();
-        final StackPane layout = new StackPane(button);
-        
-        button.setText("Click Me!");
-        //button.setOnAction((e) -> layout.setStyle("-fx-background-color: " + MyRandom.getInstance().getRandomWord(colors)));
-
-        button.setOnAction(this::fetchAsync);    
-
-        primaryStage.setScene(new Scene(layout, 300, 250));
+        names = FXCollections.observableArrayList();
+        listView = new ListView<String>();
+        listView.setItems(names);
+        primaryStage.setTitle("Star Wars API");
+        primaryStage.setScene(new Scene(listView, 300, 250));
         primaryStage.show();
+        fetchAsync();
     }
 
 
-    public void fetchAsync(ActionEvent event) {
+    public void fetchAsync() {
          try {
             HttpClient client = HttpClient.newHttpClient();
 
@@ -59,20 +80,29 @@ public class Main extends Application {
                     HttpResponse.BodyHandlers.ofString());
 
 
-            logger.log(Level.INFO, "Async test: Start"); 
-            promise.thenAccept(response -> {
+            promise.thenAccept(r -> parse(r.body()));
 
-                try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    People p = objectMapper.readValue(response.body(), People.class);
-                    System.out.println(p.results);
-                } catch(JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-
-            });
-            logger.log(Level.INFO, "Async test: End"); 
         } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void parse(String result) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            People p = objectMapper.readValue(result, People.class);
+            
+            System.out.println(p.results);
+
+            p.results.stream()
+                .sorted(Comparator.comparingDouble(Person::getBmi))
+                .map(Person::toString)
+                .forEach(person -> listView.getItems().add(person));
+
+            System.out.println("b");
+
+        } catch(JsonProcessingException e) {
             e.printStackTrace();
         }
     }
