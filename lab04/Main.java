@@ -7,16 +7,16 @@ record Customer(String name) {}
 
 class Main {
     public static void main(String [] args) throws Exception {
-        try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
-            List<Customer> customers = new ArrayList<Customer>();
+        try (var reader = new BufferedReader(new FileReader("file.txt"))) {
+            var customers = new ArrayList<Customer>();
 
-            String name = "";
+            var name = "";
             while((name = reader.readLine()) != null) {
-                Customer customer = new Customer(name);
+                var customer = new Customer(name);
                 customers.add(customer);
             }
 
-            for (Customer customer : customers) {
+            for (var customer : customers) {
                 System.out.println(customer);
             }
         }
