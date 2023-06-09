@@ -8,10 +8,19 @@ public class Main {
 
 
     public static int get(Drawable drawable) {
-        if(drawable instanceof Circle) {
-            return ((Circle) drawable).radius;
-        } else if (drawable instanceof Rectangle) {
-            return ((Rectangle) drawable).height;
+        // if(drawable instanceof Circle) {
+        //     return ((Circle) drawable).radius;
+        // } else if (drawable instanceof Rectangle) {
+        //     return ((Rectangle) drawable).height;
+        // } else {
+        //     throw new RuntimeException();
+        // }
+
+
+        if(drawable instanceof Circle circle) {
+            return circle.radius;
+        } else if (drawable instanceof Rectangle rectangle) {
+            return rectangle.height;
         } else {
             throw new RuntimeException();
         }
