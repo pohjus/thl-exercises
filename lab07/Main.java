@@ -17,13 +17,18 @@ public class Main {
         // }
 
 
-        if(drawable instanceof Circle circle) {
-            return circle.radius;
-        } else if (drawable instanceof Rectangle rectangle) {
-            return rectangle.height;
-        } else {
-            throw new RuntimeException();
-        }
+        // if(drawable instanceof Circle circle) {
+        //     return circle.radius;
+        // } else if (drawable instanceof Rectangle rectangle) {
+        //     return rectangle.height;
+        // } else {
+        //     throw new RuntimeException();
+        // }
+
+        return switch(drawable) {
+            case Circle c -> c.radius;
+            case Rectangle r -> r.height;
+        };
      }
 
 
